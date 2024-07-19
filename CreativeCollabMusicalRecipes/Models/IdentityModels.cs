@@ -25,6 +25,7 @@ namespace CreativeCollabMusicalRecipes.Models
         {
         }
 
+        public DbSet <Academy> academys { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

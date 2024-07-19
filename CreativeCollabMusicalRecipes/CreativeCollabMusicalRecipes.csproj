@@ -191,7 +191,12 @@
     <Compile Include="Migrations\202407191759094_initial.designer.cs">
       <DependentUpon>202407191759094_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202407191806146_academy.cs" />
+    <Compile Include="Migrations\202407191806146_academy.designer.cs">
+      <DependentUpon>202407191806146_academy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Academy.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -303,6 +308,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202407191759094_initial.resx">
       <DependentUpon>202407191759094_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407191806146_academy.resx">
+      <DependentUpon>202407191806146_academy.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
