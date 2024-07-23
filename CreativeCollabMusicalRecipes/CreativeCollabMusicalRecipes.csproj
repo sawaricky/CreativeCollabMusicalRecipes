@@ -196,12 +196,18 @@
     <Compile Include="Migrations\202407220557192_recipe.designer.cs">
       <DependentUpon>202407220557192_recipe.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202407231411035_InstructorandLesson.cs" />
+    <Compile Include="Migrations\202407231411035_InstructorandLesson.designer.cs">
+      <DependentUpon>202407231411035_InstructorandLesson.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Academy.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\Instruction.cs" />
+    <Compile Include="Models\Instructor.cs" />
+    <Compile Include="Models\Lesson.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Recipe.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -318,6 +324,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202407220557192_recipe.resx">
       <DependentUpon>202407220557192_recipe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407231411035_InstructorandLesson.resx">
+      <DependentUpon>202407231411035_InstructorandLesson.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

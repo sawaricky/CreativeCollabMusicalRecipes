@@ -26,6 +26,9 @@ namespace CreativeCollabMusicalRecipes.Models
         }
 
         public DbSet <Academy> academys { get; set; }
+        public DbSet<Instructor> Instructor { get; set; }
+        public DbSet<Lesson> Lesson { get; set; }
+
         public DbSet<Recipe> Recipes { get; set; }
         public DbSet<Instruction> Instructions { get; set; }
         public DbSet<Ingredient> Ingredients { get; set; }
