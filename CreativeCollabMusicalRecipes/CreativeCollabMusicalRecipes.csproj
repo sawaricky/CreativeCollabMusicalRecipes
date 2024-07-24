@@ -57,6 +57,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
@@ -180,7 +181,13 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IngredientController.cs" />
+    <Compile Include="Controllers\IngredientDataController.cs" />
+    <Compile Include="Controllers\InstructionController.cs" />
+    <Compile Include="Controllers\InstructionDataController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RecipeController.cs" />
+    <Compile Include="Controllers\RecipeDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,6 +210,10 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Academy.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ViewModels\DetailsIngredient.cs" />
+    <Compile Include="Models\ViewModels\DetailsInstruction.cs" />
+    <Compile Include="Models\ViewModels\EditIngredient.cs" />
+    <Compile Include="Models\ViewModels\EditInstruction.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Ingredient.cs" />
     <Compile Include="Models\Instruction.cs" />
@@ -250,6 +261,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\recipe.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -284,6 +296,22 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Recipe\DeleteConfirm.cshtml" />
+    <Content Include="Views\Recipe\Edit.cshtml" />
+    <Content Include="Views\Recipe\Error.cshtml" />
+    <Content Include="Views\Recipe\List.cshtml" />
+    <Content Include="Views\Recipe\New.cshtml" />
+    <Content Include="Views\Recipe\Show.cshtml" />
+    <Content Include="Views\Instruction\DeleteConfirm.cshtml" />
+    <Content Include="Views\Instruction\Details.cshtml" />
+    <Content Include="Views\Instruction\Edit.cshtml" />
+    <Content Include="Views\Instruction\List.cshtml" />
+    <Content Include="Views\Instruction\New.cshtml" />
+    <Content Include="Views\Ingredient\DeleteConfirm.cshtml" />
+    <Content Include="Views\Ingredient\Details.cshtml" />
+    <Content Include="Views\Ingredient\Edit.cshtml" />
+    <Content Include="Views\Ingredient\List.cshtml" />
+    <Content Include="Views\Ingredient\New.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
