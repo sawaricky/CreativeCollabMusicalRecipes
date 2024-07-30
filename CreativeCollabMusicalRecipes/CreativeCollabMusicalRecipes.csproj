@@ -179,12 +179,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AcademyController.cs" />
+    <Compile Include="Controllers\AcademyDataController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IngredientController.cs" />
     <Compile Include="Controllers\IngredientDataController.cs" />
     <Compile Include="Controllers\InstructionController.cs" />
     <Compile Include="Controllers\InstructionDataController.cs" />
+    <Compile Include="Controllers\InstructorController.cs" />
+    <Compile Include="Controllers\InstructorDataController.cs" />
+    <Compile Include="Controllers\LessonController.cs" />
+    <Compile Include="Controllers\LessonDataController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Controllers\RecipeDataController.cs" />
@@ -206,6 +212,18 @@
     <Compile Include="Migrations\202407231411035_InstructorandLesson.cs" />
     <Compile Include="Migrations\202407231411035_InstructorandLesson.designer.cs">
       <DependentUpon>202407231411035_InstructorandLesson.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407280044557_updates.cs" />
+    <Compile Include="Migrations\202407280044557_updates.designer.cs">
+      <DependentUpon>202407280044557_updates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407280100321_InstrumentLesssonDtoToLessonDto.cs" />
+    <Compile Include="Migrations\202407280100321_InstrumentLesssonDtoToLessonDto.designer.cs">
+      <DependentUpon>202407280100321_InstrumentLesssonDtoToLessonDto.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202407282051568_AcademyDto.cs" />
+    <Compile Include="Migrations\202407282051568_AcademyDto.designer.cs">
+      <DependentUpon>202407282051568_AcademyDto.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Academy.cs" />
@@ -244,6 +262,7 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="readme.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -312,9 +331,27 @@
     <Content Include="Views\Ingredient\Edit.cshtml" />
     <Content Include="Views\Ingredient\List.cshtml" />
     <Content Include="Views\Ingredient\New.cshtml" />
+    <Content Include="Views\Lesson\List.cshtml" />
+    <Content Include="Views\Lesson\Details.cshtml" />
+    <Content Include="Views\Lesson\New.cshtml" />
+    <Content Include="Views\Lesson\Edit.cshtml" />
+    <Content Include="Views\Lesson\DeleteConfirm.cshtml" />
+    <Content Include="Views\Instructor\List.cshtml" />
+    <Content Include="Views\Instructor\New.cshtml" />
+    <Content Include="Views\Instructor\Edit.cshtml" />
+    <Content Include="Views\Instructor\Details.cshtml" />
+    <Content Include="Views\Instructor\DeleteConfirm.cshtml" />
+    <Content Include="Views\Academy\List.cshtml" />
+    <Content Include="Views\Academy\New.cshtml" />
+    <Content Include="Views\Academy\Edit.cshtml" />
+    <Content Include="Views\Error.cshtml" />
+    <Content Include="Views\Academy\Details.cshtml" />
+    <Content Include="Views\Instructor\Error.cshtml" />
+    <Content Include="Views\Academy\DeleteConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\LessonData\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css.map" />
@@ -355,6 +392,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202407231411035_InstructorandLesson.resx">
       <DependentUpon>202407231411035_InstructorandLesson.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407280044557_updates.resx">
+      <DependentUpon>202407280044557_updates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407280100321_InstrumentLesssonDtoToLessonDto.resx">
+      <DependentUpon>202407280100321_InstrumentLesssonDtoToLessonDto.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202407282051568_AcademyDto.resx">
+      <DependentUpon>202407282051568_AcademyDto.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

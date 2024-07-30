@@ -1,0 +1,30 @@
+﻿@model CreativeCollabMusicalRecipes.Models.InstructorDto
+@{
+    ViewBag.Title = "Instructor Details";
+}
+<h2 class="text-center">Instructor Details</h2>
+@*instructor details information *@
+<div class="d-flex justify-content-center align-content-center">
+
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-body">
+                <P><span class="fw-bold"> First Name:</span> @Model.FirstName</P>
+                <p><span class="fw-bold">Last Name:</span> @Model.LastName</p>
+                <p><span class="fw-bold">Hire Date:</span> @Model.HireDate.ToShortDateString()</p>
+                <p><span class="fw-bold">Wages:</span> @Model.Wages</p>
+                <p><span class="fw-bold">Instructor Number:</span> @Model.InstructorNumber</p>
+                <p><span class="fw-bold">Instructor ID:</span> @Model.InstructorId</p>
+                <p><span class="fw-bold">Academy ID:</span> @Model.AcademyId</p>
+
+            </div>
+        </div>
+        <div class="justify-content-center align-content-center">
+            <a href="@Url.Action("List", "Instructor")" class="btn btn-secondary">Go back to instructor List</a>
+            <a href="@Url.Action("Edit", new { id = Model.InstructorId })" class="btn btn-primary">Edit</a>
+            <a href="@Url.Action("DeleteConfirm", new { id = Model.InstructorId })" class="btn btn-danger">Delete</a>
+        </div>
+    </div>
+</div>
+
+

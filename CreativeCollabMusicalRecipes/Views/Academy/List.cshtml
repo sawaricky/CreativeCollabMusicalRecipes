@@ -1,0 +1,21 @@
+﻿@model IEnumerable<CreativeCollabMusicalRecipes.Models.AcademyDto>
+@{
+    ViewBag.Title = "List";
+}
+@*lsiting the data for instrument Academy*@
+<h2>Academy List</h2>
+@foreach (var academy in Model)
+{
+
+
+    //var instructorDetailsUrl = "/Academy/Details/";
+    <p>
+        <span class="font-weight-bold" style="font-size: 18px;">Lesson Name:</span>
+        <a href="/Academy/Details/@academy.AcademyId" class="text-primary f-w-bold">
+            @academy.AcademyName
+        </a>
+    </p>
+
+    <p>Academy Address: @academy.AcademyAddress</p>
+}
+<a href="@Url.Action("List", "Academy")" class="btn btn-secondary">Add lesson</a>

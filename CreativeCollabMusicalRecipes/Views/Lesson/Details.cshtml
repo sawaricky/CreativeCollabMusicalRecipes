@@ -1,0 +1,40 @@
+﻿@model CreativeCollabMusicalRecipes.Models.LessonDto
+@{
+    ViewBag.Title = "View";
+}
+@*dislpaying the instrumet lesson details *@
+<h2>Lesson Details</h2>
+
+<div class="form-group">
+    <label>Lesson ID</label>
+    <p>@Model.LessonID</p>
+</div>
+
+<div class="form-group">
+    <label>Lesson Name</label>
+    <p>@Model.LessonName</p>
+</div>
+
+<div class="form-group">
+    <label>Start Date</label>
+    <p>@Model.StartDate.ToString("yyyy-MM-dd HH:mm")</p>
+</div>
+
+<div class="form-group">
+    <label>End Date</label>
+    <p>@Model.EndDate.ToString("yyyy-MM-dd HH:mm")</p>
+</div>
+
+<div class="form-group">
+    <label>Instructor ID</label>
+    <p>@Model.InstructorId</p>
+</div>
+
+<div class="form-group">
+    <label>Instructor Name</label>
+    <p>@Model.FirstName @Model.LastName</p>
+</div>
+
+<a href="@Url.Action("Edit", new { id = Model.LessonID })" class="btn btn-primary">Edit</a>
+<a href="@Url.Action("DeleteConfirm", new { id = Model.LessonID })" class="btn btn-danger">Delete</a>
+<a href="@Url.Action("List", "Lesson")" class="btn btn-secondary">Back to List</a>

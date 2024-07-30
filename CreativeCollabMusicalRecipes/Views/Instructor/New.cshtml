@@ -1,0 +1,37 @@
+﻿@{
+    ViewBag.Title = "NewInstructor";
+}
+
+<h2 class="text-center">Create Instructor</h2>
+<div class="container">
+    <form action="/Instructor/Create" method="Post" class="col-md-6 mx-auto">
+        <div class="form-group">
+            <label>First Name</label>
+            <input type="text" name="FirstName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" name="LastName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Hire Date</label>
+            <input type="date" name="HireDate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Wages</label>
+            <input type="number" name="Wages" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Instructor Number</label>
+            <input type="text" name="InstructorNumber" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>AcademyId</label>
+            <input type="number" name="AcademyId" class="form-control" />
+        </div>
+        <div class="form-group mt-4">
+            <button class="btn btn-primary" type="submit">Add Instructor</button>
+            <a href="@Url.Action("List", "Instructor")" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>

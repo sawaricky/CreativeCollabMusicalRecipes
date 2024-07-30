@@ -1,0 +1,29 @@
+﻿﻿@model IEnumerable<CreativeCollabMusicalRecipes.Models.LessonDto>
+@{
+    ViewBag.Title = "Create";
+}
+<h2 class="text-center">Create Lesson</h2>
+<div class="container">
+    <form action="/Lesson/Create" method="Post" class="mx-auto col-md-6">
+        <div class="form-group">
+            <label>Lesson Name</label>
+            <input type="text" name="LessonName" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Start Date</label>
+            <input type="datetime-local" name="StartDate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>End Date</label>
+            <input type="datetime-local" name="EndDate" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Instructor Id</label>
+            <input type="number" name="InstructorId" class="form-control" />
+        </div>
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary mr-2">Add Lesson</button>
+            <a href="@Url.Action("List", "Lesson")" class="btn btn-secondary">Back to List</a>
+        </div>
+    </form>
+</div>

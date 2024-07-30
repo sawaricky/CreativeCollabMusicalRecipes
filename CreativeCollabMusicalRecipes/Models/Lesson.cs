@@ -35,7 +35,7 @@ namespace CreativeCollabMusicalRecipes.Models
     /// <summary>
     /// Represents a Data Transfer Object (DTO) for an instrument lesson entity in the system, including properties such as lesson ID, lesson name, start date, end date, instructor ID, first name, and last name.
     /// </summary>
-    public class InstrumentLessonDto
+    public class LessonDto
     {
         public int LessonID { get; set; }
         public string LessonName { get; set;}

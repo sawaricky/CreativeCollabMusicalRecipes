@@ -1,0 +1,17 @@
+﻿@model CreativeCollabMusicalRecipes.Models.AcademyDto
+@{
+    ViewBag.Title = "DeleteConfirmAcademy";
+}
+
+@*confirm delete using the ID*@
+<h2>Are you sure you want to delete this Lesson?</h2>
+<h3>Instructor Number:</h3>
+<p>@Model.AcademyName </p>
+<h3>Instructor Name:</h3>
+<p> @Model.AcademyAddress: </p>
+
+<form action="/Academy/Delete/@Model.AcademyId" method="POST">
+    <p class="fw-bold">This Action cannot be undone</p>
+    <input class="btn btn-danger" type="submit" value="Confirm Delete" />
+    <a href="@Url.Action("List", "Academy")" class="btn btn-secondary">Back to List</a>
+</form>

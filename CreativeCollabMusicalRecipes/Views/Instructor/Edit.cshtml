@@ -1,0 +1,45 @@
+﻿@model CreativeCollabMusicalRecipes.Models.InstructorDto
+@{
+    ViewBag.Title = "Edit Instructor";
+}
+
+<h2>Edit Instructor</h2>
+
+@*Editing Instructor information*@
+<form action="/Instructor/Update/@Model.InstructorId" method="post">
+
+    <input type="hidden" name="InstructorId" value="@Model.InstructorId" />
+
+    <div class="form-group">
+        <label for="FirstName">First Name</label>
+        <input type="text" class="form-control" id="FirstName" name="FirstName" value="@Model.FirstName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="LastName">Last Name</label>
+        <input type="text" class="form-control" id="LastName" name="LastName" value="@Model.LastName" required />
+    </div>
+
+    <div class="form-group">
+        <label for="HireDate">Hire Date</label>
+        <input type="datetime-local" class="form-control" id="HireDate" name="HireDate" value="@Model.HireDate.ToString("yyyy-MM-ddTHH:mm")" required />
+    </div>
+
+    <div class="form-group">
+        <label for="InstructorNumber">Instructor Number</label>
+        <input type="text" class="form-control" id="InstructorNumber" name="InstructorNumber" value="@Model.InstructorNumber" required />
+    </div>
+
+    <div class="form-group">
+        <label for="Wages">Wages</label>
+        <input type="number" class="form-control" id="Wages" name="Wages" value="@Model.Wages" required />
+    </div>
+
+    <div class="form-group">
+        <label for="AcademyId">Academy Id</label>
+        <input type="number" class="form-control" id="AcademyId" name="AcademyId" value="@Model.AcademyId" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Instructor</button>
+    <a href="@Url.Action("List", "Instructor")" class="btn btn-secondary">Back to List</a>
+</form>

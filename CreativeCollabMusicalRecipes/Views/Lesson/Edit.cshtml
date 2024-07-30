@@ -1,0 +1,33 @@
+﻿@model CreativeCollabMusicalRecipes.Models.LessonDto
+@{
+    ViewBag.Title = "Edit Lesson";
+}
+@*editing lessons*@
+<h2>Edit Lesson</h2>
+
+<form action="/Lesson/Update/@Model.LessonID" method="post">
+    <input type="hidden" name="LessonID" value="@Model.LessonID" />
+
+    <div class="form-group">
+        <label for="LessonName">Lesson Name</label>
+        <input type="text" class="form-control" id="LessonName" name="LessonName" value="@Model.LessonName" />
+    </div>
+
+    <div class="form-group">
+        <label for="StartDate">Start Date</label>
+        <input type="datetime-local" class="form-control" id="StartDate" name="StartDate" value="@Model.StartDate.ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+
+    <div class="form-group">
+        <label for="EndDate">End Date</label>
+        <input type="datetime-local" class="form-control" id="EndDate" name="EndDate" value="@Model.EndDate.ToString("yyyy-MM-ddTHH:mm")" />
+    </div>
+
+    <div class="form-group">
+        <label for="InstructorId">Instructor Id</label>
+        <input type="number" class="form-control" id="InstructorId" name="InstructorId" value="@Model.InstructorId" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save Lesson</button>
+    <a href="@Url.Action("List", "Lesson")" class="btn btn-secondary">Back to List</a>
+</form>

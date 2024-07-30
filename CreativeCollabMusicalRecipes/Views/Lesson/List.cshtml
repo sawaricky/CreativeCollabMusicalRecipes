@@ -1,0 +1,26 @@
+﻿@model IEnumerable<CreativeCollabMusicalRecipes.Models.LessonDto>
+@{
+    ViewBag.Title = "List";
+}
+@*lsiting the data for instrument lessons*@
+<h2>Lesson List</h2>
+@foreach (var lesson in Model)
+{
+    // Constructing the URL for the instructor details page using the InstructorId property
+    var instructorId = lesson.InstructorId;
+    <h2>Instructor Name: @lesson.FirstName</h2>
+
+
+    //var instructorDetailsUrl = "/Lesson/Details/";
+    <p>
+        <span class="font-weight-bold" style="font-size: 18px;">Lesson Name:</span>
+        <a href="/Lesson/Details/@lesson.LessonID" class="text-primary f-w-bold">
+            @lesson.LessonName
+        </a>
+    </p>
+
+    <p>Start Date: @lesson.StartDate</p>
+    <p>End Date: @lesson.EndDate</p>
+    <p>Lesson ID: @lesson.LessonID </p>
+}
+<a href="@Url.Action("New", "Lesson")" class="btn btn-secondary">Add lesson</a>
