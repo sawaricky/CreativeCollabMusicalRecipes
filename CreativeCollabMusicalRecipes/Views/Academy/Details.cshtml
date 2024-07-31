@@ -14,9 +14,9 @@
             </div>
         </div>
         <div class="justify-content-center align-content-center">
-            <a href="@Url.Action("List", "Academy")" class="btn btn-secondary">Go back to instructor List</a>
-            <a href="@Url.Action("Edit", new { id = Model.AcademyId })" class="btn btn-primary">Edit</a>
-            <a href="@Url.Action("DeleteConfirm", new { id = Model.AcademyId })" class="btn btn-danger">Delete</a>
+            <a href="/Academy/List" class="btn btn-secondary">Go back to instructor List</a>
+            <a href="/Academy/Edit/@Model.AcademyId" class="btn btn-primary">Edit</a>
+            <a href="/Academy/DeleteConfirm/@Model.AcademyId" class="btn btn-danger">Delete</a>
         </div>
     </div>
 </div>

@@ -58,6 +58,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
         [ResponseType(typeof(LessonDto))]
         [HttpGet]
+        [Route("api/LessonData/FindLesson/{id}")]
         public IHttpActionResult FindLesson(int id)
         {
             Lesson Lesson = db.Lesson.Find(id);
@@ -94,6 +95,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Route("api/LessonData/UpdateLesson/{id}")]
         public IHttpActionResult UpdateLesson(int id, LessonDto LessonDto)
         {
             if (!ModelState.IsValid)
@@ -149,6 +151,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
         [ResponseType(typeof(Lesson))]
         [HttpPost]
+        [Route("api/LessonData/AddLesson")]
         public IHttpActionResult AddLesson(Lesson Lesson)
         {
             if (!ModelState.IsValid)
@@ -174,6 +177,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         // POST: api/InstrumentLessonData/DeleteInstructor/2
         [ResponseType(typeof(Lesson))]
         [HttpPost]
+        [Route("api/LessonData/DeleteLesson/{id}")]
         public IHttpActionResult DeleteLesson(int id)
         {
             Lesson lesson = db.Lesson.Find(id);

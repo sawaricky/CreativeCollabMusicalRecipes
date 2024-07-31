@@ -21,6 +21,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <returns>An enumerable list of AcademyDto objects showing academies.</returns>
         // GET: api/AcademyData/ListAcademy
         [HttpGet]
+        [Route("api/AcademyData/ListAcademy")]
         public IEnumerable<AcademyDto> ListAcademy()
         {
             List<Academy> Academys = db.academys.ToList();
@@ -44,6 +45,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
         [ResponseType(typeof(Academy))]
         [HttpPost]
+        [Route("api/AcademyData/AddAcademy")]
         public IHttpActionResult AddAcademy(Academy academy)
         {
             if (!ModelState.IsValid)
@@ -57,88 +59,91 @@ namespace CreativeCollabMusicalRecipes.Controllers
             return Ok();
         }
 
-        //[ResponseType(typeof(AcademyDto))]
-        //[HttpGet]
+        [ResponseType(typeof(AcademyDto))]
+        [HttpGet]
+        [Route("api/AcademyData/FindAcademy/{id}")]
+        public IHttpActionResult FindAcademy(int id)
+        {
+            Academy academy = db.academys.Find(id);
+            if (academy == null)
+            {
+                return NotFound();
+            }
 
-        //public IHttpActionResult FindAcademy(int id)
-        //{
-        //    Academy academy = db.academys.Find(id);
-        //    if (academy == null)
-        //    {
-        //        return NotFound();
-        //    }
+            AcademyDto academyDto = new AcademyDto
+            {
+                AcademyId = academy.AcademyId,
+                AcademyName = academy.AcademyName,
+                AcademyAddress = academy.AcademyAddress
+            };
 
-        //    AcademyDto academyDto = new AcademyDto
-        //    {
-        //        AcademyName = academy.AcademyName,
-        //        AcademyAddress = academy.AcademyAddress
-        //    };
+            return Ok(academyDto);
 
-        //    return Ok(academyDto);
+        }
 
-        //}
+        [ResponseType(typeof(void))]
+        [HttpPost]
+        [Route("api/AcademyData/UpdateAcademy/{id}")]
+        public IHttpActionResult UpdateAcademy(int id, AcademyDto academyDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-        //[ResponseType(typeof(void))]
-        //[HttpPost]
-        //public IHttpActionResult UpdateAcademy(int id, AcademyDto academyDto)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
+            if (id != academyDto.AcademyId)
+            {
+                return BadRequest();
+            }
 
-        //    if (id != academyDto.AcademyId)
-        //    {
-        //        return BadRequest();
-        //    }
+            Academy academy = db.academys.Find(id);
+            if (academy == null)
+            {
+                return NotFound();
+            }
 
-        //    Academy academy = db.academys.Find(id);
-        //    if (academy == null)
-        //    {
-        //        return NotFound();
-        //    }
+            academy.AcademyName = academyDto.AcademyName;
+            academy.AcademyAddress = academyDto.AcademyAddress;
+            db.Entry(academy).State = EntityState.Modified;
 
-        //    academy.AcademyName = academyDto.AcademyName;
-        //    academy.AcademyAddress = academyDto.AcademyAddress;
-        //    db.Entry(academy).State = EntityState.Modified;
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!AcademyExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
 
-        //    try
-        //    {
-        //        db.SaveChanges();
-        //    }
-        //    catch (DbUpdateConcurrencyException)
-        //    {
-        //        if (!AcademyExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            throw;
-        //        }
-        //    }
+            return StatusCode(HttpStatusCode.NoContent);
+        }
+        private bool AcademyExists(int id)
+        {
+            return db.academys.Count(e => e.AcademyId == id) > 0;
+        }
 
-        //    return StatusCode(HttpStatusCode.NoContent);
-        //}
-        //private bool AcademyExists(int id)
-        //{
-        //    return db.academys.Count(e => e.AcademyId == id) > 0;
-        //}
+        [ResponseType(typeof(Instructor))]
+        [HttpPost]
+        [Route("api/AcademyData/DeleteAcademy/{id}")]
+        public IHttpActionResult DeleteAcademy(int id)
+        {
+            Academy academy = db.academys.Find(id);
+            if (academy == null)
+            {
+                return NotFound();
+            }
 
-        //[ResponseType(typeof(Instructor))]
-        //[HttpPost]
-        //public IHttpActionResult DeleteAcademy(int id)
-        //{
-        //    Academy academy = db.academys.Find(id);
-        //    if (academy == null)
-        //    {
-        //        return NotFound();
-        //    }
+            db.academys.Remove(academy);
+            db.SaveChanges();
 
-        //    db.academys.Remove(academy);
-        //    db.SaveChanges();
-
-        //    return Ok(academy);
-        //}
+            return Ok(academy);
+        }
     }
-    }
+}

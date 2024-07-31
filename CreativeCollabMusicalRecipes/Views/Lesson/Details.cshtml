@@ -35,6 +35,6 @@
     <p>@Model.FirstName @Model.LastName</p>
 </div>
 
-<a href="@Url.Action("Edit", new { id = Model.LessonID })" class="btn btn-primary">Edit</a>
-<a href="@Url.Action("DeleteConfirm", new { id = Model.LessonID })" class="btn btn-danger">Delete</a>
-<a href="@Url.Action("List", "Lesson")" class="btn btn-secondary">Back to List</a>
+<a href="/Lesson/Edit/@Model.LessonID" class="btn btn-primary">Edit</a>
+<a href="/Lesson/DeleteConfirm/@Model.LessonID" class="btn btn-danger">Delete</a>
+<a href="/Lesson/List" class="btn btn-secondary">Back to List</a>

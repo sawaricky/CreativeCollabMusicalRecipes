@@ -97,7 +97,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
             HttpResponseMessage response = client.PostAsync(url, content).Result;
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToAction("ListInstructor");
+                return RedirectToAction("List");
             }
             else
             {

@@ -20,9 +20,9 @@
             </div>
         </div>
         <div class="justify-content-center align-content-center">
-            <a href="@Url.Action("List", "Instructor")" class="btn btn-secondary">Go back to instructor List</a>
-            <a href="@Url.Action("Edit", new { id = Model.InstructorId })" class="btn btn-primary">Edit</a>
-            <a href="@Url.Action("DeleteConfirm", new { id = Model.InstructorId })" class="btn btn-danger">Delete</a>
+            <a href="/Instructor/List" class="btn btn-secondary">Go back to instructor List</a>
+            <a href="/Instructor/Edit/@Model.InstructorId" class="btn btn-primary">Edit</a>
+            <a href="/Instructor/DeleteConfirm/@Model.InstructorId" class="btn btn-danger">Delete</a>
         </div>
     </div>
 </div>

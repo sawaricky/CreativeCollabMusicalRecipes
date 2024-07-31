@@ -59,6 +59,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
         [ResponseType(typeof(InstructorDto))]
         [HttpGet]
+        [Route("api/InstructorData/FindInstructor/{id}")]
 
         public IHttpActionResult FindInstructor(int id)
         {
@@ -95,6 +96,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
         [ResponseType(typeof(void))]
         [HttpPost]
+        [Route("api/InstructorData/UpdateInstructor/{id}")]
         public IHttpActionResult UpdateInstructor(int id, InstructorDto instructorDto)
         {
             if (!ModelState.IsValid)
@@ -150,6 +152,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
         [ResponseType(typeof(Instructor))]
         [HttpPost]
+        [Route("api/InstructorData/AddInstructor")]
         public IHttpActionResult AddInstructor(Instructor instructor)
         {
             if (!ModelState.IsValid)
@@ -173,6 +176,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
         [ResponseType(typeof(Instructor))]
         [HttpPost]
+        [Route("api/InstructorData/DeleteInstructor/{id}")]
         public IHttpActionResult DeleteInstructor(int id)
         {
             Instructor instructor = db.Instructor.Find(id);

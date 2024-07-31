@@ -76,97 +76,97 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
 
 
-        //public ActionResult Details(int id)
-        //{
-        //    // Objective: Communicate with our instructor data API to retrieve one instructor
-        //    HttpClient client = new HttpClient();
-        //    string url = "https://localhost:44363/api/AcademyData/FindAcademy/" + id;
-        //    HttpResponseMessage response = client.GetAsync(url).Result;
+        public ActionResult Details(int id)
+        {
+            // Objective: Communicate with our instructor data API to retrieve one instructor
+            HttpClient client = new HttpClient();
+            string url = "https://localhost:44363/api/AcademyData/FindAcademy/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
 
-        //    AcademyDto selectedAcademy = response.Content.ReadAsAsync<AcademyDto>().Result;
-        //    Debug.WriteLine("Academy received ");
+            AcademyDto selectedAcademy = response.Content.ReadAsAsync<AcademyDto>().Result;
+            Debug.WriteLine("Academy received ");
 
-        //    return View(selectedAcademy);
-        //}
+            return View(selectedAcademy);
+        }
 
-        //public ActionResult Edit(int id)
-        //{
-        //    // Objective: Communicate with our instructor data API to edit one instructor
-        //    HttpClient client = new HttpClient();
-        //    string url = "https://localhost:44363/api/AcademyData/FindAcademy/" + id;
-        //    HttpResponseMessage response = client.GetAsync(url).Result;
-
-
-        //    AcademyDto selectedAcademy = response.Content.ReadAsAsync<AcademyDto>().Result;
-        //    Debug.WriteLine("Academy received ");
-
-        //    return View(selectedAcademy);
-        //}
+        public ActionResult Edit(int id)
+        {
+            // Objective: Communicate with our instructor data API to edit one instructor
+            HttpClient client = new HttpClient();
+            string url = "https://localhost:44363/api/AcademyData/FindAcademy/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
 
 
-        //[HttpPost]
-        //public ActionResult Update(int id, Academy  academy)
-        //{
-        //    try
-        //    {
+            AcademyDto selectedAcademy = response.Content.ReadAsAsync<AcademyDto>().Result;
+            Debug.WriteLine("Academy received ");
 
-        //        Debug.WriteLine("The new academy info is:");
-        //        Debug.WriteLine(academy.AcademyName);
-        //        Debug.WriteLine(academy.AcademyAddress);
+            return View(selectedAcademy);
+        }
 
 
-        //        HttpClient client = new HttpClient();
-        //        string url = "https://localhost:44363/api/AcademyData/UpdateAcademy/" + id;
+        [HttpPost]
+        public ActionResult Update(int id, Academy academy)
+        {
+            try
+            {
 
-        //        string jsonpayload = jss.Serialize(academy);
-        //        HttpContent content = new StringContent(jsonpayload);
-        //        content.Headers.ContentType.MediaType = "application/json";
-
-        //        HttpResponseMessage response = client.PostAsync(url, content).Result;
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            return RedirectToAction("List");
-        //        }
-        //        else
-        //        {
-        //            return RedirectToAction("Error");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Debug.WriteLine("Error: " + ex.Message);
-        //        return View();
-        //    }
-
-        //}
-        //public ActionResult DeleteConfirm(int id)
-        //{
-        //    HttpClient client = new HttpClient();
-        //    string url = "https://localhost:44363/api/AcademyData/FindAcademy/" + id;
-        //    HttpResponseMessage response = client.GetAsync(url).Result;
-        //    AcademyDto selectedAcademy = response.Content.ReadAsAsync<AcademyDto>().Result;
-        //    return View(selectedAcademy);
-        //}
+                Debug.WriteLine("The new academy info is:");
+                Debug.WriteLine(academy.AcademyName);
+                Debug.WriteLine(academy.AcademyAddress);
 
 
-        //[HttpPost]
-        //public ActionResult Delete(int id)
-        //{
-        //    HttpClient client = new HttpClient();
-        //    string url = "https://localhost:44363/api/AcademyData/DeleteAcademy/" + id;
-        //    HttpContent content = new StringContent("");
-        //    content.Headers.ContentType.MediaType = "application/json";
-        //    HttpResponseMessage response = client.PostAsync(url, content).Result;
+                HttpClient client = new HttpClient();
+                string url = "https://localhost:44363/api/AcademyData/UpdateAcademy/" + id;
 
-        //    if (response.IsSuccessStatusCode)
-        //    {
-        //        return RedirectToAction("List");
-        //    }
-        //    else
-        //    {
-        //        return RedirectToAction("Error");
-        //    }
-        //}
+                string jsonpayload = jss.Serialize(academy);
+                HttpContent content = new StringContent(jsonpayload);
+                content.Headers.ContentType.MediaType = "application/json";
+
+                HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("List");
+                }
+                else
+                {
+                    return RedirectToAction("Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error: " + ex.Message);
+                return View();
+            }
+
+        }
+        public ActionResult DeleteConfirm(int id)
+        {
+            HttpClient client = new HttpClient();
+            string url = "https://localhost:44363/api/AcademyData/FindAcademy/" + id;
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            AcademyDto selectedAcademy = response.Content.ReadAsAsync<AcademyDto>().Result;
+            return View(selectedAcademy);
+        }
+
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            HttpClient client = new HttpClient();
+            string url = "https://localhost:44363/api/AcademyData/DeleteAcademy/" + id;
+            HttpContent content = new StringContent("");
+            content.Headers.ContentType.MediaType = "application/json";
+            HttpResponseMessage response = client.PostAsync(url, content).Result;
+
+            if (response.IsSuccessStatusCode)
+            {
+                return RedirectToAction("List");
+            }
+            else
+            {
+                return RedirectToAction("Error");
+            }
+        }
     }
 }
