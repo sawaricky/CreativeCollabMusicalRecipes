@@ -10,11 +10,11 @@
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-body">
-                    <h5 class="card-title">@instructor.FirstName @instructor.LastName</h5>
+                    <h5 class="card-title"><strong>Instructor Name:</strong> @instructor.FirstName @instructor.LastName</h5>
                     <p class="card-text"><strong>Instructor Number:</strong> @instructor.InstructorNumber</p>
-                    <p class="card-text"><strong>Hire Date:</strong> @instructor.HireDate.ToShortDateString()</p>
+                    @*<p class="card-text"><strong>Hire Date:</strong> @instructor.HireDate.ToShortDateString()</p>
                     <p class="card-text"><strong>Wages:</strong> @instructor.Wages</p>
-                    <p class="card-text"><strong>Academy ID:</strong> @instructor.AcademyId </p>
+                    <p class="card-text"><strong>Academy ID:</strong> @instructor.AcademyId </p>*@
                     <a href="/Instructor/Details/@instructor.InstructorId" class="btn btn-primary">View Details</a>
 
                 </div>
