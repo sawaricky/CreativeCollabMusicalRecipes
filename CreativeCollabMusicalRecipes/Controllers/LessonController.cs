@@ -15,10 +15,16 @@ namespace CreativeCollabMusicalRecipes.Controllers
     {
         private static readonly HttpClient client;
         private JavaScriptSerializer jss = new JavaScriptSerializer();
-
         static LessonController()
         {
-            client = new HttpClient();
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                //cookies are manually set in RequestHeader
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
             client.BaseAddress = new Uri("https://localhost:44363/api/");
         }
 
@@ -59,8 +65,6 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
         public ActionResult Details(int id)
         {
-            // Objective: Communicate with our Lesson data API to retrieve one Lesson
-
             string url = "LessonData/FindLesson/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
@@ -71,17 +75,58 @@ namespace CreativeCollabMusicalRecipes.Controllers
             ViewModel.SelectedLesson = selectedLesson;
 
             // Fetch related recipes
-            url = "RecipeData/ListRecipesForLesson/" + id;
-            response = client.GetAsync(url).Result;
-            IEnumerable<RecipeDto> relatedRecipes = response.Content.ReadAsAsync<IEnumerable<RecipeDto>>().Result;
-            Debug.WriteLine("Number of related recipes received: " + relatedRecipes.Count());
+            if (selectedLesson.RecipeId.HasValue)
+            {
+                url = "RecipeData/FindRecipe/" + selectedLesson.RecipeId.Value;
+                response = client.GetAsync(url).Result;
+                RecipeDto relatedRecipe = response.Content.ReadAsAsync<RecipeDto>().Result;
+                Debug.WriteLine("Recipe received");
 
-            ViewModel.RelatedRecipes = relatedRecipes;
+                selectedLesson.Recipe = relatedRecipe; // Assign the recipe to the lesson
+            }
 
             return View(ViewModel);
         }
 
+        /// <summary>
+        /// Retrieves the authentication token from the application's cookie and sets it in the HTTP client's headers.
+        /// This method ensures that the HTTP client is prepared for making authenticated requests to the WebAPI.
+        /// </summary>
+        /// <example>
+        /// Usage:
+        /// <code>
+        /// GetApplicationCookie();
+        /// // Now the client has the authentication token set in the headers and can make authenticated requests.
+        /// </code>
+        /// </example>
+        private void GetApplicationCookie()
+        {
+            string token = "";
+
+            // Remove any existing cookies from the HTTP client's headers to prevent caching issues.
+            client.DefaultRequestHeaders.Remove("Cookie");
+
+            // Check if the user is authenticated before proceeding.
+            if (!User.Identity.IsAuthenticated) return;
+
+            // Retrieve the authentication cookie from the current HTTP context.
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+
+            // Log the token for debugging purposes.
+            Debug.WriteLine("Token Submitted is : " + token);
+
+            // If a token is found, add it to the HTTP client's headers.
+            if (!string.IsNullOrEmpty(token))
+            {
+                client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+            }
+
+            return;
+        }
+
         // GET: Instructor/New
+        [Authorize]
         public ActionResult New()
         {
             string url = "recipedata/listrecipes/";
@@ -101,6 +146,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
         // POST: Instructor/Create
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Lesson lesson)
         {
             if (lesson.RecipeId == null || lesson.RecipeId == 0)
@@ -141,6 +187,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// and then display its details in the view for editing.
         /// </example>
 
+        [Authorize]
         public ActionResult Edit(int id)
         {
             string lessonUrl = "LessonData/FindLesson/" + id;
@@ -166,6 +213,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// This will send a JSON payload containing the updated instrument lesson details to the InstrumentLessonData API and update the instrument lesson in the system.
         /// </example>
         [HttpPost]
+        [Authorize]
         public ActionResult Update(Lesson Lesson)
         {
             try
@@ -175,6 +223,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 Debug.WriteLine(Lesson.StartDate);
                 Debug.WriteLine(Lesson.EndDate);
                 Debug.WriteLine(Lesson.InstructorId);
+                Debug.WriteLine(Lesson.RecipeId);
 
                 // Serialize into JSON and send the request to the API
 
@@ -217,6 +266,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// This will send a delete request to the LessonData API to remove the instrument lesson with ID 5 from the system.
         /// </example>
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
 
@@ -245,6 +295,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
 
         // GET: Instructor/Delete/5
+        [Authorize]
         public ActionResult DeleteConfirm(int id)
         {
 

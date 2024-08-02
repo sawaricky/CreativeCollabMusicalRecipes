@@ -97,6 +97,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(void))]
         [HttpPost]
         [Route("api/InstructorData/UpdateInstructor/{id}")]
+        [Authorize]
         public IHttpActionResult UpdateInstructor(int id, InstructorDto instructorDto)
         {
             if (!ModelState.IsValid)
@@ -153,6 +154,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Instructor))]
         [HttpPost]
         [Route("api/InstructorData/AddInstructor")]
+        [Authorize]
         public IHttpActionResult AddInstructor(Instructor instructor)
         {
             if (!ModelState.IsValid)
@@ -177,6 +179,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Instructor))]
         [HttpPost]
         [Route("api/InstructorData/DeleteInstructor/{id}")]
+        [Authorize]
         public IHttpActionResult DeleteInstructor(int id)
         {
             Instructor instructor = db.Instructor.Find(id);
@@ -202,5 +205,14 @@ namespace CreativeCollabMusicalRecipes.Controllers
         {
             return db.Instructor.Count(e => e.InstructorId == id) > 0;
         }
+
+        [Route("api/InstructorData/CountInstructors")]
+        [HttpGet]
+        public IHttpActionResult CountInstructors()
+        {
+            int count = db.Instructor.Count();
+            return Ok(count);
+        }
+
     }
 }

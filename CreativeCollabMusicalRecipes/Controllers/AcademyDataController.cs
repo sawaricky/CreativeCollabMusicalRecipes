@@ -52,6 +52,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Academy))]
         [HttpPost]
         [Route("api/AcademyData/AddAcademy")]
+        [Authorize]
         public IHttpActionResult AddAcademy(Academy academy)
         {
             if (!ModelState.IsValid)
@@ -102,6 +103,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(void))]
         [HttpPost]
         [Route("api/AcademyData/UpdateAcademy/{id}")]
+        [Authorize]
         public IHttpActionResult UpdateAcademy(int id, AcademyDto academyDto)
         {
             if (!ModelState.IsValid)
@@ -161,6 +163,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Instructor))]
         [HttpPost]
         [Route("api/AcademyData/DeleteAcademy/{id}")]
+        [Authorize]
         public IHttpActionResult DeleteAcademy(int id)
         {
             Academy academy = db.academys.Find(id);

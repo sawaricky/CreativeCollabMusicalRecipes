@@ -12,7 +12,22 @@ namespace CreativeCollabMusicalRecipes.Controllers
 {
     public class AcademyController : Controller
     {
+        private static readonly HttpClient client;
         private JavaScriptSerializer jss = new JavaScriptSerializer();
+
+        static AcademyController()
+        {
+            HttpClientHandler handler = new HttpClientHandler()
+            {
+                AllowAutoRedirect = false,
+                //cookies are manually set in RequestHeader
+                UseCookies = false
+            };
+
+            client = new HttpClient(handler);
+            client.BaseAddress = new Uri("https://localhost:44363/api/");
+        }
+
         // GET: Academy/List
         /// <summary>
         /// To list the data from the database for the academies
@@ -26,8 +41,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
             //objective: communivate with out instructor data api to retrieve a list of INstructors
             //curl https://localhost:44363/api/AcademyData/ListAcademy
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/AcademyData/ListAcademy";
+            string url = "AcademyData/ListAcademy";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             Debug.WriteLine("The response code is ");
@@ -39,7 +53,46 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
             return View(academys);
         }
+
+        /// <summary>
+        /// Retrieves the authentication token from the application's cookie and sets it in the HTTP client's headers.
+        /// This method ensures that the HTTP client is prepared for making authenticated requests to the WebAPI.
+        /// </summary>
+        /// <example>
+        /// Usage:
+        /// <code>
+        /// GetApplicationCookie();
+        /// // Now the client has the authentication token set in the headers and can make authenticated requests.
+        /// </code>
+        /// </example>
+        private void GetApplicationCookie()
+        {
+            string token = "";
+
+            // Remove any existing cookies from the HTTP client's headers to prevent caching issues.
+            client.DefaultRequestHeaders.Remove("Cookie");
+
+            // Check if the user is authenticated before proceeding.
+            if (!User.Identity.IsAuthenticated) return;
+
+            // Retrieve the authentication cookie from the current HTTP context.
+            HttpCookie cookie = System.Web.HttpContext.Current.Request.Cookies.Get(".AspNet.ApplicationCookie");
+            if (cookie != null) token = cookie.Value;
+
+            // Log the token for debugging purposes.
+            Debug.WriteLine("Token Submitted is : " + token);
+
+            // If a token is found, add it to the HTTP client's headers.
+            if (!string.IsNullOrEmpty(token))
+            {
+                client.DefaultRequestHeaders.Add("Cookie", ".AspNet.ApplicationCookie=" + token);
+            }
+
+            return;
+        }
+
         // GET: Instructor/NewInstructor
+        [Authorize]
         public ActionResult New()
         {
             return View();
@@ -54,13 +107,13 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <param name="academy">The academy object containing details to be added.</param>
         /// <returns>Redirects to the List view if successful, otherwise redirects to the Error view.</returns>
         [HttpPost]
+        [Authorize]
         public ActionResult Create(Academy academy)
         {
             Debug.WriteLine("the json payload is :");
             //objective: add a new Instructor into our system using the API
             //curl -H "Content-Type:application/json" -d @instructor.json https://localhost:44363/api/InstructorData/AddInstructor
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/AcademyData/AddAcademy";
+            string url = "AcademyData/AddAcademy";
 
             string jsonpayload = jss.Serialize(academy);
 
@@ -94,8 +147,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         public ActionResult Details(int id)
         {
             // Objective: Communicate with our instructor data API to retrieve one instructor
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/AcademyData/FindAcademy/" + id;
+            string url = "AcademyData/FindAcademy/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             AcademyDto selectedAcademy = response.Content.ReadAsAsync<AcademyDto>().Result;
@@ -112,11 +164,11 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// https://localhost:44363/api/AcademyData/UpdateAcademy/5
         /// </example>
         /// <returns>If successful, this will redirect to the index view. If an error occurs, it will return to the edit view.</returns>
+        [Authorize]
         public ActionResult Edit(int id)
         {
             // Objective: Communicate with our instructor data API to edit one instructor
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/AcademyData/FindAcademy/" + id;
+            string url = "AcademyData/FindAcademy/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
 
@@ -137,6 +189,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
 
         [HttpPost]
+        [Authorize]
         public ActionResult Update(int id, Academy academy)
         {
             try
@@ -147,8 +200,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 Debug.WriteLine(academy.AcademyAddress);
 
 
-                HttpClient client = new HttpClient();
-                string url = "https://localhost:44363/api/AcademyData/UpdateAcademy/" + id;
+                    string url = "AcademyData/UpdateAcademy/" + id;
 
                 string jsonpayload = jss.Serialize(academy);
                 HttpContent content = new StringContent(jsonpayload);
@@ -181,10 +233,10 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// https://localhost:44300/api/AcademyData/DeleteAcademy/5
         /// </example>
         /// <returns>This will display a confirmation view to the user for deleting the specified academy</returns>
+        [Authorize]
         public ActionResult DeleteConfirm(int id)
         {
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/AcademyData/FindAcademy/" + id;
+            string url = "AcademyData/FindAcademy/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             AcademyDto selectedAcademy = response.Content.ReadAsAsync<AcademyDto>().Result;
             return View(selectedAcademy);
@@ -201,10 +253,10 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <returns>If successful, this will redirect to the index view. If an error occurs, it will return to the delete confirmation view.</returns>
         // POST: Academy/Delete/5
         [HttpPost]
+        [Authorize]
         public ActionResult Delete(int id)
         {
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/AcademyData/DeleteAcademy/" + id;
+            string url = "AcademyData/DeleteAcademy/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;

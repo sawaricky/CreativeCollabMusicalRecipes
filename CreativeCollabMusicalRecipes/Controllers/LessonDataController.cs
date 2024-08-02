@@ -67,6 +67,20 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 return NotFound();
             }
 
+            RecipeDto recipeDto = null;
+            if (Lesson.RecipeId.HasValue)
+            {
+                Recipe recipe = db.Recipes.Find(Lesson.RecipeId.Value);
+                if (recipe != null)
+                {
+                    recipeDto = new RecipeDto
+                    {
+                        RecipeId = recipe.RecipeId,
+                        Title = recipe.Title
+                    };
+                }
+            }
+
             LessonDto LessonDto = new LessonDto
             {
                 LessonID = Lesson.LessonID,
@@ -75,8 +89,11 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 EndDate = Lesson.EndDate,
                 InstructorId = Lesson.InstructorId,
                 FirstName = Lesson.Instructor?.FirstName,
-                LastName = Lesson.Instructor?.LastName
+                LastName = Lesson.Instructor?.LastName,
+                RecipeId = Lesson.RecipeId,
+                Recipe = recipeDto
             };
+
 
             return Ok(LessonDto);
 
@@ -96,6 +113,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(void))]
         [HttpPost]
         [Route("api/LessonData/UpdateLesson/{id}")]
+        [Authorize]
         public IHttpActionResult UpdateLesson(int id, LessonDto LessonDto)
         {
             if (!ModelState.IsValid)
@@ -153,6 +171,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Lesson))]
         [HttpPost]
         [Route("api/LessonData/AddLesson")]
+        [Authorize]
         public IHttpActionResult AddLesson(Lesson Lesson)
         {
             if (!ModelState.IsValid)
@@ -184,6 +203,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Lesson))]
         [HttpPost]
         [Route("api/LessonData/DeleteLesson/{id}")]
+        [Authorize]
         public IHttpActionResult DeleteLesson(int id)
         {
             Lesson lesson = db.Lesson.Find(id);
@@ -209,5 +229,14 @@ namespace CreativeCollabMusicalRecipes.Controllers
         {
             return db.Lesson.Count(e => e.LessonID == id) > 0;
         }
+
+        [Route("api/LessonData/CountLessons")]
+        [HttpGet]
+        public IHttpActionResult CountLessons()
+        {
+            int count = db.Lesson.Count();
+            return Ok(count);
+        }
+
     }
 }
