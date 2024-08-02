@@ -1,4 +1,5 @@
 ﻿using CreativeCollabMusicalRecipes.Models;
+using CreativeCollabMusicalRecipes.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,8 +13,14 @@ namespace CreativeCollabMusicalRecipes.Controllers
 {
     public class LessonController : Controller
     {
-        // GET: Lesson
+        private static readonly HttpClient client;
         private JavaScriptSerializer jss = new JavaScriptSerializer();
+
+        static LessonController()
+        {
+            client = new HttpClient();
+            client.BaseAddress = new Uri("https://localhost:44363/api/");
+        }
 
         // GET: Instructor/List
         /// <summary>
@@ -29,8 +36,8 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
             //objective: communivate with out instructor data api to retrieve a list of instrumetn lessons 
             //curl https://localhost:44363/api/LessonData/ListLesson
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/LessonData/ListLesson";
+
+            string url = "LessonData/ListLesson";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
             Debug.WriteLine("The response code is ");
@@ -52,22 +59,35 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
         public ActionResult Details(int id)
         {
-            // Objective: Communicate with our instructor data API to retrieve one Instrument lesson
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/LessonData/FindLesson/" + id;
+            // Objective: Communicate with our Lesson data API to retrieve one Lesson
+
+            string url = "LessonData/FindLesson/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
+            DetailsLesson ViewModel = new DetailsLesson();
 
             LessonDto selectedLesson = response.Content.ReadAsAsync<LessonDto>().Result;
-            Debug.WriteLine("InstrumentLesson received ");
+            Debug.WriteLine("Lesson received ");
+            ViewModel.SelectedLesson = selectedLesson;
 
-            return View(selectedLesson);
+            // Fetch related recipes
+            url = "RecipeData/ListRecipesForLesson/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<RecipeDto> relatedRecipes = response.Content.ReadAsAsync<IEnumerable<RecipeDto>>().Result;
+            Debug.WriteLine("Number of related recipes received: " + relatedRecipes.Count());
+
+            ViewModel.RelatedRecipes = relatedRecipes;
+
+            return View(ViewModel);
         }
 
         // GET: Instructor/New
         public ActionResult New()
         {
-            return View();
+            string url = "recipedata/listrecipes/";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            IEnumerable<RecipeDto> RecipeOptions = response.Content.ReadAsAsync<IEnumerable<RecipeDto>>().Result;
+            return View(RecipeOptions);
         }
         /// <summary>
         /// Creates a new lesson by posting the provided data to the API.
@@ -83,12 +103,16 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [HttpPost]
         public ActionResult Create(Lesson lesson)
         {
+            if (lesson.RecipeId == null || lesson.RecipeId == 0)
+            {
+                lesson.RecipeId = null;
+            }
             Debug.WriteLine("the json payload is :");
 
             //objective: add a new Lesson into our system using the API
             //curl -H "Content-Type:application/json" -d @InstrumentLesson.json https://localhost:44363/api/Lessondata/AddLesson 
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/LessonData/AddLesson";
+
+            string url = "LessonData/AddLesson";
 
             string jsonpayload = jss.Serialize(lesson);
 
@@ -119,14 +143,15 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
         public ActionResult Edit(int id)
         {
-            // Objective: Communicate with our Lesson data API to Edit one lesson
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/LessonData/FindLesson/" + id;
-            HttpResponseMessage response = client.GetAsync(url).Result;
+            string lessonUrl = "LessonData/FindLesson/" + id;
+            HttpResponseMessage lessonResponse = client.GetAsync(lessonUrl).Result;
+            LessonDto selectedLesson = lessonResponse.Content.ReadAsAsync<LessonDto>().Result;
 
+            string recipeUrl = "recipedata/listrecipes/";
+            HttpResponseMessage recipeResponse = client.GetAsync(recipeUrl).Result;
+            IEnumerable<RecipeDto> recipeOptions = recipeResponse.Content.ReadAsAsync<IEnumerable<RecipeDto>>().Result;
 
-            LessonDto selectedLesson = response.Content.ReadAsAsync<LessonDto>().Result;
-            Debug.WriteLine("Instructor received ");
+            ViewBag.RecipeOptions = recipeOptions;
 
             return View(selectedLesson);
         }
@@ -152,11 +177,14 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 Debug.WriteLine(Lesson.InstructorId);
 
                 // Serialize into JSON and send the request to the API
-                HttpClient client = new HttpClient();
-                string url = "https://localhost:44363/api/LessonData/UpdateLesson/" + Lesson.LessonID;
 
+                if (Lesson.RecipeId == 0)
+                {
+                    Lesson.RecipeId = null;
+                }
+
+                string url = "LessonData/UpdateLesson/" + Lesson.LessonID;
                 string jsonpayload = jss.Serialize(Lesson);
-                Debug.WriteLine(jsonpayload);
 
                 HttpContent content = new StringContent(jsonpayload);
                 content.Headers.ContentType.MediaType = "application/json";
@@ -188,11 +216,11 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// POST: /LessonData/Delete/5
         /// This will send a delete request to the LessonData API to remove the instrument lesson with ID 5 from the system.
         /// </example>
-         [HttpPost]
+        [HttpPost]
         public ActionResult Delete(int id)
         {
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/LessonData/DeleteLesson/" + id;
+
+            string url = "LessonData/DeleteLesson/" + id;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
             HttpResponseMessage response = client.PostAsync(url, content).Result;
@@ -219,8 +247,8 @@ namespace CreativeCollabMusicalRecipes.Controllers
         // GET: Instructor/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
-            HttpClient client = new HttpClient();
-            string url = "https://localhost:44363/api/LessonData/FindLesson/" + id;
+
+            string url = "LessonData/FindLesson/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             LessonDto selectedlesson = response.Content.ReadAsAsync<LessonDto>().Result;
             return View(selectedlesson);

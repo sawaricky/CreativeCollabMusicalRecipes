@@ -119,6 +119,37 @@ namespace CreativeCollabMusicalRecipes.Controllers
         }
 
         /// <summary>
+        /// Returns all recipes related to a particular lesson ID
+        /// </summary>
+        /// <param name="id">Lesson ID.</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: All recipes related to the specified lesson ID
+        /// </returns>
+        /// <example>
+        /// GET: api/RecipeData/ListRecipesForLesson/3
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(RecipeDto))]
+        [Route("api/RecipeData/ListRecipesForLesson/{id}")]
+        public IHttpActionResult ListRecipesForLesson(int id)
+        {
+            List<Recipe> Recipes = db.Recipes.ToList();
+            List<RecipeDto> RecipeDtos = new List<RecipeDto>();
+
+            Recipes.ForEach(a => RecipeDtos.Add(new RecipeDto()
+            {
+                RecipeId = a.RecipeId,
+                Title = a.Title,
+                Description = a.Description,
+                Category = a.Category,
+                CookingTime = a.CookingTime
+            }));
+
+            return Ok(RecipeDtos);
+        }
+
+        /// <summary>
         /// Finds a specific recipe by its ID, including ingredients and instructions
         /// </summary>
         /// <param name="id">The ID of the recipe</param>

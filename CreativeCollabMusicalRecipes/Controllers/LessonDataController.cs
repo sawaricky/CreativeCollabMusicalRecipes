@@ -46,7 +46,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
             return LessonDtos;
         }
-       
+
         /// <summary>
         /// Retrieves the details of a specific instrument lesson based on the provided ID.
         /// </summary>
@@ -108,18 +108,19 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 return BadRequest();
             }
 
-            Lesson Lesson = db.Lesson.Find(id);
-            if (Lesson == null)
+            Lesson lesson = db.Lesson.Find(id);
+            if (lesson == null)
             {
                 return NotFound();
             }
 
-            Lesson.LessonName = LessonDto.LessonName;
-            Lesson.StartDate = LessonDto.StartDate;
-            Lesson.EndDate = LessonDto.EndDate;
-            Lesson.InstructorId = LessonDto.InstructorId;
+            lesson.LessonName = LessonDto.LessonName;
+            lesson.StartDate = LessonDto.StartDate;
+            lesson.EndDate = LessonDto.EndDate;
+            lesson.InstructorId = LessonDto.InstructorId;
+            lesson.RecipeId = LessonDto.RecipeId == 0 ? (int?)null : LessonDto.RecipeId;
 
-            db.Entry(Lesson).State = EntityState.Modified;
+            db.Entry(lesson).State = EntityState.Modified;
 
             try
             {
@@ -139,7 +140,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
-       
+
         /// <summary>
         /// Adds a new instrument lesson by sending the provided data to the API.
         /// </summary>
@@ -158,13 +159,18 @@ namespace CreativeCollabMusicalRecipes.Controllers
             {
                 return BadRequest(ModelState);
             }
+            // Check if RecipeId is 0 and set it to null if so
+            if (Lesson.RecipeId == 0)
+            {
+                Lesson.RecipeId = null;
+            }
 
             db.Lesson.Add(Lesson);
             db.SaveChanges();
 
             return Ok();
         }
-       
+
         /// <summary>
         /// Deletes a specific instrument lesson by sending a delete request to the API.
         /// </summary>
