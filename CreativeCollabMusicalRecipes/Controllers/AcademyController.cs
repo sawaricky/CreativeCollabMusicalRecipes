@@ -44,7 +44,15 @@ namespace CreativeCollabMusicalRecipes.Controllers
         {
             return View();
         }
-
+        // POST: Academy/Create
+        /// <summary>
+        /// To display a form for adding a new academy
+        /// </summary>
+        /// <example>
+        /// POST request to https://localhost:44300/api/AcademyData/AddAcademy with academy data.
+        /// </example>
+        /// <param name="academy">The academy object containing details to be added.</param>
+        /// <returns>Redirects to the List view if successful, otherwise redirects to the Error view.</returns>
         [HttpPost]
         public ActionResult Create(Academy academy)
         {
@@ -75,7 +83,14 @@ namespace CreativeCollabMusicalRecipes.Controllers
         }
 
 
-
+        /// <summary>
+        /// To retrieve the details of a specific academy by its ID
+        /// </summary>
+        /// <param name="id">The ID of the academy</param>
+        /// <example>
+        /// https://localhost:44300/api/AcademyData/FindAcademy/5
+        /// </example>
+        /// <returns>This will communicate with the AcademyData API and retrieve the details of the specified academy, then display its details in the view</returns>
         public ActionResult Details(int id)
         {
             // Objective: Communicate with our instructor data API to retrieve one instructor
@@ -88,7 +103,15 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
             return View(selectedAcademy);
         }
-
+        // POST: Academy/Edit/5
+        /// <summary>
+        /// To update the details of an existing academy in the database
+        /// </summary>
+        /// <param name="id">The ID of the academy to update</param>
+        /// <example>
+        /// https://localhost:44363/api/AcademyData/UpdateAcademy/5
+        /// </example>
+        /// <returns>If successful, this will redirect to the index view. If an error occurs, it will return to the edit view.</returns>
         public ActionResult Edit(int id)
         {
             // Objective: Communicate with our instructor data API to edit one instructor
@@ -102,7 +125,16 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
             return View(selectedAcademy);
         }
-
+        // POST: Academy/Update
+        /// <summary>
+        /// updates an existing academy by submitting updated data 
+        /// </summary>
+        /// <param name="id">The ID of the academy to be updated.</param>
+        /// <param name="academy">The academy object containing updated details.</param>
+        /// <returns>Redirects to the List view if successful, otherwise redirects to the Error view.</returns>
+        /// <example>
+        /// POST request to https://localhost:44363/api/AcademyData/UpdateAcademy/{id} with updated academy data.
+        /// </example>
 
         [HttpPost]
         public ActionResult Update(int id, Academy academy)
@@ -140,6 +172,15 @@ namespace CreativeCollabMusicalRecipes.Controllers
             }
 
         }
+        // GET: Academy/Delete/5
+        /// <summary>
+        /// To display a confirmation view for deleting an academy
+        /// </summary>
+        /// <param name="id">The ID of the academy to delete</param>
+        /// <example>
+        /// https://localhost:44300/api/AcademyData/DeleteAcademy/5
+        /// </example>
+        /// <returns>This will display a confirmation view to the user for deleting the specified academy</returns>
         public ActionResult DeleteConfirm(int id)
         {
             HttpClient client = new HttpClient();
@@ -149,7 +190,16 @@ namespace CreativeCollabMusicalRecipes.Controllers
             return View(selectedAcademy);
         }
 
-
+        // POST: Academy/Delete/5
+        /// <summary>
+        /// To delete an existing academy from the database
+        /// </summary>
+        /// <param name="id">The ID of the academy to delete</param>
+        /// <example>
+        /// https://localhost:44300/api/AcademyData/DeleteAcademy/5
+        /// </example>
+        /// <returns>If successful, this will redirect to the index view. If an error occurs, it will return to the delete confirmation view.</returns>
+        // POST: Academy/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {

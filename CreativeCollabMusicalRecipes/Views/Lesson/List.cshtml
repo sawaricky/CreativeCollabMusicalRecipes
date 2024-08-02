@@ -2,57 +2,38 @@
 @{
     ViewBag.Title = "List";
 }
-@*lsiting the data for instrument lessons*@
-@*<h2>Lesson List</h2>
-@foreach (var lesson in Model)
-{
-    // Constructing the URL for the instructor details page using the InstructorId property
-    var instructorId = lesson.InstructorId;
-    <h2>Instructor Name: @lesson.FirstName @lesson.LastName</h2>
+@*lsiting the data for lessons*@
 
-
-    //var instructorDetailsUrl = "/Lesson/Details/";
-    <p>
-        <span class="font-weight-bold" style="font-size: 18px;">Lesson Name:</span>
-        <a href="/Lesson/Details/@lesson.LessonID" class="text-primary f-w-bold">
-            @lesson.LessonName
-        </a>
-    </p>
-
-    <p>Start Date: @lesson.StartDate</p>
-        <p>End Date: @lesson.EndDate</p>
-        <p>Lesson ID: @lesson.LessonID </p>
-}*@
-
-
+<h2 class="text-center">Lesson List </h2>
 <a href="/Lesson/New" class="btn btn-secondary">Add lesson</a>
 
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Lesson Name</th>
-            <th>Instructor Name</th>
-            <th>Action</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var lesson in Model)
-        {
+<div class="d-flex justify-content-center align-content-center">
+    <table class="table table-striped" >
+        <thead class="text-center">
             <tr>
-                <td><a href="/Lesson/Details/@lesson.LessonID"> @lesson.LessonName </a></td>
-                <td>@lesson.FirstName</td>
-                <td>
-                    <div class="d-flex gap-2">
-                        <a href="/Lesson/Edit/@lesson.LessonID" class="btn btn-primary">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <a href="/Lesson/DeleteConfirm/@lesson.LessonID" class="btn btn-danger">
-                            <i class="bi bi-trash"></i>
-                        </a>
-                    </div>
-                </td>
+                <th>Lesson Name</th>
+                <th>Instructor Name</th>
+                <th>Action</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody class="text-center">
+            @foreach (var lesson in Model)
+            {
+                <tr>
+                    <td><a href="/Lesson/Details/@lesson.LessonID"> @lesson.LessonName </a></td>
+                    <td>@lesson.FirstName</td>
+                    <td>
+                        <div class="d-flex gap-2 justify-content-center align-content-center">
+                            <a href="/Lesson/Edit/@lesson.LessonID" class="btn btn-primary">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <a href="/Lesson/DeleteConfirm/@lesson.LessonID" class="btn btn-danger">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

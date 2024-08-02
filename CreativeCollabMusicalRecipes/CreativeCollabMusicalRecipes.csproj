@@ -272,6 +272,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="readme.txt" />
+    <Content Include="Readme\readme.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -357,6 +358,8 @@
     <Content Include="Views\Academy\Details.cshtml" />
     <Content Include="Views\Instructor\Error.cshtml" />
     <Content Include="Views\Academy\DeleteConfirm.cshtml" />
+    <Content Include="Views\Academy\Error.cshtml" />
+    <Content Include="Views\Lesson\Error.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

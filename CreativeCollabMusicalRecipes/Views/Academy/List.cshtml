@@ -3,19 +3,23 @@
     ViewBag.Title = "List";
 }
 @*lsiting the data for instrument Academy*@
-<h2>Academy List</h2>
-@foreach (var academy in Model)
-{
+<h2 class="text-center">Academy List</h2>
+<div class="row d-flex text-center justify-content-center align-content-center">
+    @foreach (var academy in Model)
+    {
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <p>
+                    <span class="font-weight-bold" style="font-size: 18px;">Academy Name:</span>
+                    <a href="/Academy/Details/@academy.AcademyId" class="text-primary f-w-bold">
+                        @academy.AcademyName
+                    </a>
+                </p>
 
-
-    //var instructorDetailsUrl = "/Academy/Details/";
-    <p>
-        <span class="font-weight-bold" style="font-size: 18px;">Academy Name:</span>
-        <a href="/Academy/Details/@academy.AcademyId" class="text-primary f-w-bold">
-            @academy.AcademyName
-        </a>
-    </p>
-
-    <p>Academy Address: @academy.AcademyAddress</p>
-}
-<a href="/Academy/New" class="btn btn-secondary">Add Academy</a>
+                <p>Academy Address: @academy.AcademyAddress</p>
+              
+            </div>
+        </div>
+    }
+                <a href="/Academy/New" class="btn btn-secondary">Add Academy</a>
+ </div>

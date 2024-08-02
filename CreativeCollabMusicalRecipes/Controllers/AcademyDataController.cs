@@ -42,7 +42,13 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
             return AcademyDtos;
         }
-
+        // POST: api/AcademyData/AddAcademy
+        /// <summary>
+        /// Adds a new academy to the database.
+        /// </summary>
+        /// <param name="academy">The academy object to add.</param>
+        /// <returns>Returns the newly added academy.</returns>
+        // POST: api/AcademyData
         [ResponseType(typeof(Academy))]
         [HttpPost]
         [Route("api/AcademyData/AddAcademy")]
@@ -58,7 +64,12 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
             return Ok();
         }
-
+        // GET: api/AcademyData/FindAcademy
+        /// <summary>
+        /// Retrieves details of a specific academy by its ID.
+        /// </summary>
+        /// <param name="id">The ID of the academy to retrieve.</param>
+        /// <returns>Returns the details of the academy by the given ID in DTO format.</returns>
         [ResponseType(typeof(AcademyDto))]
         [HttpGet]
         [Route("api/AcademyData/FindAcademy/{id}")]
@@ -80,7 +91,14 @@ namespace CreativeCollabMusicalRecipes.Controllers
             return Ok(academyDto);
 
         }
-
+        // POST: api/AcademyData/UpdateAcademy
+        /// <summary>
+        /// Updates the details of an existing academy in the database.
+        /// </summary>
+        /// <param name="id">The ID of the academy to update.</param>
+        /// <param name="academy">The updated academy object containing new details.</param>
+        /// <returns>Returns a status code indicating the success of the update operation.</returns>
+        // Post: api/AcademyData/5
         [ResponseType(typeof(void))]
         [HttpPost]
         [Route("api/AcademyData/UpdateAcademy/{id}")]
@@ -124,11 +142,22 @@ namespace CreativeCollabMusicalRecipes.Controllers
 
             return StatusCode(HttpStatusCode.NoContent);
         }
+        /// <summary>
+        /// Checks if an academy exists in the database based on its ID.
+        /// </summary>
+        /// <param name="id">The ID of the academy to check.</param>
+        /// <returns>True if an academy with the specified ID exists; otherwise, false.</returns>
         private bool AcademyExists(int id)
         {
             return db.academys.Count(e => e.AcademyId == id) > 0;
         }
-
+        // POST: api/AcademyData/DeleteAcademy/5
+        /// <summary>
+        /// Deletes an existing academy from the database.
+        /// </summary>
+        /// <param name="id">The ID of the academy to delete.</param>
+        /// <returns>Returns the deleted academy if successful; otherwise, returns a NotFound response.</returns>
+        // DELETE: api/AcademyData/5
         [ResponseType(typeof(Instructor))]
         [HttpPost]
         [Route("api/AcademyData/DeleteAcademy/{id}")]
