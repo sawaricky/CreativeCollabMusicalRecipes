@@ -1,5 +1,6 @@
 # Musical Recipes
 Introduction
+
 The Musical Recipes system showcases a Minimum Viable Product (MVP) with full Create, Read, Update, and Delete (CRUD) functionality. Based on feedback from team meetings, the system implements a fully functioning WebAPI and corresponding user interface to manage the data and relationships across all tables, from individual projects to the collaborated system.
 
 Overview Collaborated Content:
