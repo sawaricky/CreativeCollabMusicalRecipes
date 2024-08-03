@@ -1,40 +1,51 @@
-﻿@model CreativeCollabMusicalRecipes.Models.LessonDto
+﻿@model CreativeCollabMusicalRecipes.Models.ViewModels.DetailsLesson
 @{
     ViewBag.Title = "View";
 }
-@*dislpaying the instrumet lesson details *@
+@* Displaying the lesson details *@
 <h2>Lesson Details</h2>
 
-<div class="form-group">
-    <label>Lesson ID</label>
-    <p>@Model.LessonID</p>
+<div class="form-group d-flex gap-2">
+    <label>Lesson ID: </label>
+    <p>@Model.SelectedLesson.LessonID</p>
 </div>
 
-<div class="form-group">
-    <label>Lesson Name</label>
-    <p>@Model.LessonName</p>
+<div class="form-group d-flex gap-2">
+    <label>Lesson Name: </label>
+    <p>@Model.SelectedLesson.LessonName</p>
 </div>
 
-<div class="form-group">
-    <label>Start Date</label>
-    <p>@Model.StartDate.ToString("yyyy-MM-dd HH:mm")</p>
+<div class="form-group d-flex gap-2">
+    <label>Start Date: </label>
+    <p>@Model.SelectedLesson.StartDate.ToString("yyyy-MM-dd HH:mm")</p>
 </div>
 
-<div class="form-group">
-    <label>End Date</label>
-    <p>@Model.EndDate.ToString("yyyy-MM-dd HH:mm")</p>
+<div class="form-group d-flex gap-2">
+    <label>End Date: </label>
+    <p>@Model.SelectedLesson.EndDate.ToString("yyyy-MM-dd HH:mm")</p>
 </div>
 
-<div class="form-group">
-    <label>Instructor ID</label>
-    <p>@Model.InstructorId</p>
+<div class="form-group d-flex gap-2">
+    <label>Instructor ID: </label>
+    <p>@Model.SelectedLesson.InstructorId</p>
 </div>
 
-<div class="form-group">
-    <label>Instructor Name</label>
-    <p>@Model.FirstName @Model.LastName</p>
+<div class="form-group d-flex gap-2">
+    <label>Instructor Name: </label>
+    <p>@Model.SelectedLesson.FirstName @Model.SelectedLesson.LastName</p>
 </div>
+@if (Model.SelectedLesson.RecipeId != null)
+{
+    <div class="form-group d-flex gap-2">
+        <label>Recipe ID: </label>
+        <p>@Model.SelectedLesson.RecipeId</p>
+    </div>
+    <div class="form-group d-flex gap-2">
+        <label>Recipe: </label>
+        <p>@Model.SelectedLesson.Recipe.Title</p>
+    </div>
+}
 
-<a href="/Lesson/Edit/@Model.LessonID" class="btn btn-primary">Edit</a>
-<a href="/Lesson/DeleteConfirm/@Model.LessonID" class="btn btn-danger">Delete</a>
+<a href="/Lesson/Edit/@Model.SelectedLesson.LessonID" class="btn btn-primary">Edit</a>
+<a href="/Lesson/DeleteConfirm/@Model.SelectedLesson.LessonID" class="btn btn-danger">Delete</a>
 <a href="/Lesson/List" class="btn btn-secondary">Back to List</a>
