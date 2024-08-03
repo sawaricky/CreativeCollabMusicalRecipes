@@ -46,6 +46,7 @@ namespace CreativeCollabMusicalRecipes.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int? RecipeId { get; set; }
+        public RecipeDto Recipe { get; set; }
 
     }
 

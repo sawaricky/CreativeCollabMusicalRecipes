@@ -373,5 +373,14 @@ namespace CreativeCollabMusicalRecipes.Controllers
         {
             return db.Recipes.Count(e => e.RecipeId == id) > 0;
         }
+
+        [Route("api/RecipeData/CountRecipes")]
+        [HttpGet]
+        public IHttpActionResult CountRecipes()
+        {
+            int count = db.Recipes.Count();
+            return Ok(count);
+        }
+
     }
 }
