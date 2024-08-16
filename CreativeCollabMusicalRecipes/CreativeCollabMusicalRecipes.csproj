@@ -233,6 +233,10 @@
     <Compile Include="Migrations\202408020728394_MakeRecipeIdNullable.designer.cs">
       <DependentUpon>202408020728394_MakeRecipeIdNullable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202408160529119_Relational-update.cs" />
+    <Compile Include="Migrations\202408160529119_Relational-update.designer.cs">
+      <DependentUpon>202408160529119_Relational-update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Academy.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -418,6 +422,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202408020728394_MakeRecipeIdNullable.resx">
       <DependentUpon>202408020728394_MakeRecipeIdNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202408160529119_Relational-update.resx">
+      <DependentUpon>202408160529119_Relational-update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
