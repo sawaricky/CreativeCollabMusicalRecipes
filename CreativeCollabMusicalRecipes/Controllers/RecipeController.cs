@@ -125,7 +125,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <example>
         /// GET: Recipe/New
         /// </example>
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult New()
         {
             GetApplicationCookie();//get token credentials
@@ -142,7 +142,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// BODY: { "Title": "New Recipe", "Description": "Description", "Category": "Category", "CookingTime": 30, "Ingredients": [{ "IngredientName": "Sugar", "IngredientQuantity": 1, "IngredientUnit": "cup" }], "Instructions": [{ "StepNumber": 1, "Description": "Mix ingredients" }] }
         /// </example>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult Add(Recipe recipe)
         {
             GetApplicationCookie();//get token credentials
@@ -176,7 +176,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <returns>A view with a form to edit the recipe</returns>
         /// <example>
         /// GET: Recipe/Edit/5
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult Edit(int id)
         {
             GetApplicationCookie();//get token credentials
@@ -204,7 +204,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// BODY: { "RecipeId": 5, "Title": "Updated Recipe", "Description": "Updated Description", "Category": "Updated Category", "CookingTime": 45, "Ingredients": [{ "IngredientId": 1, "IngredientName": "Salt", "IngredientQuantity": 2, "IngredientUnit": "tbsp" }], "Instructions": [{ "InstructionId": 1, "StepNumber": 1, "Description": "Updated Step" }] }
         /// </example>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult Update(int id, Recipe recipe)
         {
             GetApplicationCookie();//get token credentials
@@ -248,7 +248,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <example>
         /// GET: Recipe/DeleteConfirm/5
         /// </example>
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult DeleteConfirm(int id)
         {
             GetApplicationCookie();//get token credentials
@@ -267,7 +267,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// POST: Recipe/Delete/5
         /// </example>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult Delete(int id)
         {
             GetApplicationCookie();//get token credentials

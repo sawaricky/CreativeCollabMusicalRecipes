@@ -129,7 +129,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <example>
         /// GET: Instruction/New
         /// </example>
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult New()
         {
             GetApplicationCookie();//get token credentials
@@ -149,7 +149,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// BODY: { "InstructionName": "Sugar", "InstructionQuantity": 1, "InstructionUnit": "cup", "RecipeId" }
         /// </example>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult Create(Instruction instruction)
         {
             GetApplicationCookie();//get token credentials
@@ -178,7 +178,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <returns>A view with a form to edit the instruction</returns>
         /// <example>
         /// GET: Instruction/Edit/5
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult Edit(int id)
         {
             GetApplicationCookie();//get token credentials
@@ -209,7 +209,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// BODY: { "InstructionId": 1, "InstructionName": "Salt", "InstructionQuantity": 2, "InstructionUnit": "tbsp" }
         /// </example>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult Update(int id, Instruction instruction)
         {
             GetApplicationCookie();//get token credentials
@@ -217,7 +217,6 @@ namespace CreativeCollabMusicalRecipes.Controllers
             Debug.WriteLine(instruction.InstructionId);
             Debug.WriteLine(instruction.StepNumber);
             Debug.WriteLine(instruction.Description);
-            Debug.WriteLine(instruction.RecipeId);
 
             string url = "instructiondata/updateinstruction/" + id;
             string jsonpayload = jss.Serialize(instruction);
@@ -243,7 +242,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <example>
         /// GET: Instruction/DeleteConfirm/5
         /// </example>
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult DeleteConfirm(int id)
         {
             GetApplicationCookie();//get token credentials
@@ -262,7 +261,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// POST: Instruction/Delete/5
         /// </example>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public ActionResult Delete(int id)
         {
             GetApplicationCookie();//get token credentials

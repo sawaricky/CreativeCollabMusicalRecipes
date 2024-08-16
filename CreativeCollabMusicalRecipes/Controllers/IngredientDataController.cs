@@ -34,9 +34,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 IngredientId = a.IngredientId,
                 IngredientName = a.IngredientName,
                 IngredientQuantity = a.IngredientQuantity,
-                IngredientUnit = a.IngredientUnit,
-                RecipeId = a.RecipeId,
-                RecipeTitle = a.Recipe.Title
+                IngredientUnit = a.IngredientUnit
             }));
 
             return IngredientDtos;
@@ -66,11 +64,40 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 IngredientId = ingredient.IngredientId,
                 IngredientName = ingredient.IngredientName,
                 IngredientQuantity = ingredient.IngredientQuantity,
-                IngredientUnit = ingredient.IngredientUnit,
-                RecipeId = ingredient.RecipeId
+                IngredientUnit = ingredient.IngredientUnit
             };
 
             return Ok(ingredientDto);
+        }
+
+        /// <summary>
+        /// Returns all ingredients related to a particular ingredient ID
+        /// </summary>
+        /// <param name="id">Ingredient ID.</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: All ingredients related to the specified ingredient ID
+        /// </returns>
+        /// <example>
+        /// GET: api/IngredientData/ListIngredientsForRecipe/3
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(IngredientDto))]
+        [Route("api/IngredientData/ListIngredientsForRecipe/{id}")]
+        public IHttpActionResult ListIngredientsForRecipe(int id)
+        {
+            List<Ingredient> Ingredients = db.Ingredients.Where(r => r.Recipe.Any(i => i.RecipeId == id)).ToList();
+            List<IngredientDto> IngredientDtos = new List<IngredientDto>();
+
+            Ingredients.ForEach(a => IngredientDtos.Add(new IngredientDto()
+            {
+                IngredientId = a.IngredientId,
+                IngredientName = a.IngredientName,
+                IngredientQuantity = a.IngredientQuantity,
+                IngredientUnit = a.IngredientUnit
+            }));
+
+            return Ok(IngredientDtos);
         }
 
         /// <summary>
@@ -85,7 +112,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Ingredient))]
         [HttpPost]
         [Route("api/IngredientData/AddIngredient")]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public IHttpActionResult AddIngredient(Ingredient ingredient)
         {
             if (!ModelState.IsValid)
@@ -110,7 +137,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Ingredient))]
         [HttpPost]
         [Route("api/IngredientData/DeleteIngredient/{id}")]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public IHttpActionResult DeleteIngredient(int id)
         {
             Ingredient ingredient = db.Ingredients.Find(id);
@@ -138,7 +165,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(void))]
         [HttpPost]
         [Route("api/IngredientData/UpdateIngredient/{id}")]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public IHttpActionResult UpdateIngredient(int id, Ingredient ingredient)
         {
             if (!ModelState.IsValid)

@@ -34,13 +34,39 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 InstructionId = a.InstructionId,
                 StepNumber = a.StepNumber,
                 Description = a.Description,
-                RecipeId = a.RecipeId,
-                RecipeTitle = a.Recipe.Title
             }));
 
             return InstructionDtos;
         }
 
+        /// <summary>
+        /// Returns all instructions related to a particular instruction ID
+        /// </summary>
+        /// <param name="id">Instruction ID.</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: All instructions related to the specified instruction ID
+        /// </returns>
+        /// <example>
+        /// GET: api/InstructionData/ListInstructionsForRecipe/3
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(InstructionDto))]
+        [Route("api/InstructionData/ListInstructionsForRecipe/{id}")]
+        public IHttpActionResult ListInstructionsForRecipe(int id)
+        {
+            List<Instruction> Instructions = db.Instructions.Where(r => r.Recipe.Any(i => i.RecipeId == id)).ToList();
+            List<InstructionDto> InstructionDtos = new List<InstructionDto>();
+
+            Instructions.ForEach(a => InstructionDtos.Add(new InstructionDto()
+            {
+                InstructionId = a.InstructionId,
+                StepNumber = a.StepNumber,
+                Description = a.Description,
+            }));
+
+            return Ok(InstructionDtos);
+        }
 
         /// <summary>
         /// Finds a specific instruction by its ID
@@ -65,8 +91,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
             {
                 InstructionId = instruction.InstructionId,
                 StepNumber = instruction.StepNumber,
-                Description = instruction.Description,
-                RecipeId = instruction.RecipeId
+                Description = instruction.Description
             };
 
             return Ok(instructionDto);
@@ -84,7 +109,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Instruction))]
         [HttpPost]
         [Route("api/InstructionData/AddInstruction")]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public IHttpActionResult AddInstruction(Instruction instruction)
         {
             if (!ModelState.IsValid)
@@ -109,7 +134,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Instruction))]
         [HttpPost]
         [Route("api/InstructionData/DeleteInstruction/{id}")]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public IHttpActionResult DeleteInstruction(int id)
         {
             Instruction instruction = db.Instructions.Find(id);
@@ -137,7 +162,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(void))]
         [HttpPost]
         [Route("api/InstructionData/UpdateInstruction/{id}")]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public IHttpActionResult UpdateInstruction(int id, Instruction instruction)
         {
             if (!ModelState.IsValid)

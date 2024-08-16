@@ -134,7 +134,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [Route("api/RecipeData/ListRecipesForLesson/{id}")]
         public IHttpActionResult ListRecipesForLesson(int id)
         {
-            List<Recipe> Recipes = db.Recipes.ToList();
+            List<Recipe> Recipes = db.Recipes.Where(r => r.Lessons.Any(i => i.LessonID == id)).ToList();
             List<RecipeDto> RecipeDtos = new List<RecipeDto>();
 
             Recipes.ForEach(a => RecipeDtos.Add(new RecipeDto()
@@ -205,7 +205,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Recipe))]
         [HttpPost]
         [Route("api/RecipeData/AddRecipe")]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public IHttpActionResult AddRecipe(Recipe recipe)
         {
             if (!ModelState.IsValid)
@@ -230,7 +230,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Recipe))]
         [HttpPost]
         [Route("api/RecipeData/DeleteRecipe/{id}")]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public IHttpActionResult DeleteRecipe(int id)
         {
             Recipe recipe = db.Recipes.Find(id);
@@ -258,7 +258,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(void))]
         [HttpPost]
         [Route("api/RecipeData/UpdateRecipe/{id}")]
-        [Authorize]
+        [Authorize(Roles = "FoodAdmin")]
         public IHttpActionResult UpdateRecipe(int id, Recipe recipe)
         {
 
