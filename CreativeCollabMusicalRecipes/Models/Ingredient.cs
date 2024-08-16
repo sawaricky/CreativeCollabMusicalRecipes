@@ -18,8 +18,7 @@ namespace CreativeCollabMusicalRecipes.Models
         [ForeignKey("Recipe")]
 
         // An Ingredient is part of one Recipe
-        public int RecipeId { get; set; }
-        public virtual Recipe Recipe { get; set; }
+        public virtual ICollection<Recipe> Recipe { get; set; }
     }
     public class IngredientDto
     {
@@ -27,7 +26,6 @@ namespace CreativeCollabMusicalRecipes.Models
         public string IngredientName { get; set; }
         public string IngredientQuantity { get; set; }
         public string IngredientUnit { get; set; }
-        public int RecipeId { get; set; }
-        public string RecipeTitle { get; set; }
+        public List<RecipeDto> Recipes { get; set; }
     }
 }

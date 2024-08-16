@@ -21,6 +21,7 @@ namespace CreativeCollabMusicalRecipes.Models
         // A Recipe can have many Instructions
         public virtual ICollection<Instruction> Instructions { get; set; }
 
+        public virtual ICollection<Lesson> Lessons { get; set; }
 
     }
     public class RecipeDto
@@ -32,5 +33,7 @@ namespace CreativeCollabMusicalRecipes.Models
         public int CookingTime { get; set; }
         public List<IngredientDto> Ingredients { get; set; }
         public List<InstructionDto> Instructions { get; set; }
+        public List<LessonDto> Lessons { get; set; }
+
     }
 }

@@ -27,9 +27,7 @@ namespace CreativeCollabMusicalRecipes.Models
         public int InstructorId { get; set; }
         public virtual Instructor Instructor { get; set; }
 
-        // A Lesson is part of one Recipe
-        public int? RecipeId { get; set; }
-        public virtual Recipe Recipe { get; set; }
+        public virtual ICollection<Recipe> Recipe { get; set; }
 
     }
     /// <summary>
@@ -45,9 +43,7 @@ namespace CreativeCollabMusicalRecipes.Models
         public int InstructorId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public int? RecipeId { get; set; }
-        public RecipeDto Recipe { get; set; }
-
+        public List<RecipeDto> Recipes { get; set; }
     }
 
 }

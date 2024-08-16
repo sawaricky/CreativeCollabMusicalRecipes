@@ -43,6 +43,13 @@
                     <li><a href="/Instruction/Details/@instruction.InstructionId">@instruction.Description</a></li>
                 }
             </ol>
+            <p class="m-0"><strong>Lessons:</strong></p>
+            <ol>
+                @foreach (var lesson in Model.Lessons)
+                {
+                    <li><a href="/Instruction/Details/@lesson.LessonID">@lesson.LessonName</a></li>
+                }
+            </ol>
         </div>
     </div>
 </div>

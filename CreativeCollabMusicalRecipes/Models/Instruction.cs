@@ -17,15 +17,13 @@ namespace CreativeCollabMusicalRecipes.Models
         [ForeignKey("Recipe")]
 
         // An Instruction is part of one Recipe
-        public int RecipeId { get; set; }
-        public virtual Recipe Recipe { get; set; }
+        public virtual ICollection<Recipe> Recipe { get; set; }
     }
     public class InstructionDto
     {
         public int InstructionId { get; set; }
         public int StepNumber { get; set; }
         public string Description { get; set; }
-        public int RecipeId { get; set; }
-        public string RecipeTitle { get; set; }
+        public List<RecipeDto> Recipes { get; set; }
     }
 }

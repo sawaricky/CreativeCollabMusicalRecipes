@@ -34,17 +34,19 @@
     <label>Instructor Name: </label>
     <p>@Model.SelectedLesson.FirstName @Model.SelectedLesson.LastName</p>
 </div>
-@if (Model.SelectedLesson.RecipeId != null)
+<p class="m-0"><strong>Recipes:</strong></p>
+@foreach (var recipe in Model.RelatedRecipes)
 {
     <div class="form-group d-flex gap-2">
         <label>Recipe ID: </label>
-        <p>@Model.SelectedLesson.RecipeId</p>
+        <p>@recipe.RecipeId</p>
     </div>
     <div class="form-group d-flex gap-2">
         <label>Recipe: </label>
-        <p>@Model.SelectedLesson.Recipe.Title</p>
+        <p>@recipe.Title</p>
     </div>
 }
+
 
 <a href="/Lesson/Edit/@Model.SelectedLesson.LessonID" class="btn btn-primary">Edit</a>
 <a href="/Lesson/DeleteConfirm/@Model.SelectedLesson.LessonID" class="btn btn-danger">Delete</a>
