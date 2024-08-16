@@ -74,16 +74,13 @@ namespace CreativeCollabMusicalRecipes.Controllers
             Debug.WriteLine("Lesson received ");
             ViewModel.SelectedLesson = selectedLesson;
 
-            // Fetch related recipes
-            if (selectedLesson.RecipeId.HasValue)
-            {
-                url = "RecipeData/FindRecipe/" + selectedLesson.RecipeId.Value;
-                response = client.GetAsync(url).Result;
-                RecipeDto relatedRecipe = response.Content.ReadAsAsync<RecipeDto>().Result;
-                Debug.WriteLine("Recipe received");
+            url = "RecipeData/ListRecipesForLesson/" + id;
+            response = client.GetAsync(url).Result;
+            IEnumerable<RecipeDto> relatedRecipe = response.Content.ReadAsAsync<IEnumerable<RecipeDto>>().Result;
 
-                selectedLesson.Recipe = relatedRecipe; // Assign the recipe to the lesson
-            }
+            Debug.WriteLine("Recipe received");
+
+            ViewModel.RelatedRecipes = relatedRecipe;
 
             return View(ViewModel);
         }
@@ -149,10 +146,6 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [Authorize]
         public ActionResult Create(Lesson lesson)
         {
-            if (lesson.RecipeId == null || lesson.RecipeId == 0)
-            {
-                lesson.RecipeId = null;
-            }
             Debug.WriteLine("the json payload is :");
 
             //objective: add a new Lesson into our system using the API
@@ -161,7 +154,6 @@ namespace CreativeCollabMusicalRecipes.Controllers
             string url = "LessonData/AddLesson";
 
             string jsonpayload = jss.Serialize(lesson);
-
             Debug.WriteLine(jsonpayload);
 
             HttpContent content = new StringContent(jsonpayload);
@@ -176,6 +168,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
             {
                 return RedirectToAction("Error");
             }
+
         }
         /// <summary>
         /// Retrieves the details of a specific instrument lesson for editing based on the provided ID.
@@ -223,14 +216,6 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 Debug.WriteLine(Lesson.StartDate);
                 Debug.WriteLine(Lesson.EndDate);
                 Debug.WriteLine(Lesson.InstructorId);
-                Debug.WriteLine(Lesson.RecipeId);
-
-                // Serialize into JSON and send the request to the API
-
-                if (Lesson.RecipeId == 0)
-                {
-                    Lesson.RecipeId = null;
-                }
 
                 string url = "LessonData/UpdateLesson/" + Lesson.LessonID;
                 string jsonpayload = jss.Serialize(Lesson);

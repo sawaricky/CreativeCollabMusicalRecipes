@@ -92,7 +92,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         }
 
         // GET: Instructor/NewInstructor
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult New()
         {
             return View();
@@ -107,7 +107,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <param name="academy">The academy object containing details to be added.</param>
         /// <returns>Redirects to the List view if successful, otherwise redirects to the Error view.</returns>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult Create(Academy academy)
         {
             Debug.WriteLine("the json payload is :");
@@ -164,7 +164,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// https://localhost:44363/api/AcademyData/UpdateAcademy/5
         /// </example>
         /// <returns>If successful, this will redirect to the index view. If an error occurs, it will return to the edit view.</returns>
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult Edit(int id)
         {
             // Objective: Communicate with our instructor data API to edit one instructor
@@ -189,7 +189,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// </example>
 
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult Update(int id, Academy academy)
         {
             try
@@ -233,7 +233,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// https://localhost:44300/api/AcademyData/DeleteAcademy/5
         /// </example>
         /// <returns>This will display a confirmation view to the user for deleting the specified academy</returns>
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult DeleteConfirm(int id)
         {
             string url = "AcademyData/FindAcademy/" + id;
@@ -253,7 +253,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// <returns>If successful, this will redirect to the index view. If an error occurs, it will return to the delete confirmation view.</returns>
         // POST: Academy/Delete/5
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult Delete(int id)
         {
             string url = "AcademyData/DeleteAcademy/" + id;

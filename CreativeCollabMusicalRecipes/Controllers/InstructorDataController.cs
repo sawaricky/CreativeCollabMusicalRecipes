@@ -97,7 +97,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(void))]
         [HttpPost]
         [Route("api/InstructorData/UpdateInstructor/{id}")]
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public IHttpActionResult UpdateInstructor(int id, InstructorDto instructorDto)
         {
             if (!ModelState.IsValid)
@@ -154,7 +154,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Instructor))]
         [HttpPost]
         [Route("api/InstructorData/AddInstructor")]
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public IHttpActionResult AddInstructor(Instructor instructor)
         {
             if (!ModelState.IsValid)
@@ -179,7 +179,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         [ResponseType(typeof(Instructor))]
         [HttpPost]
         [Route("api/InstructorData/DeleteInstructor/{id}")]
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public IHttpActionResult DeleteInstructor(int id)
         {
             Instructor instructor = db.Instructor.Find(id);

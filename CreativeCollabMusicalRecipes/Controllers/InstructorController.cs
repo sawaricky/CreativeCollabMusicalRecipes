@@ -111,7 +111,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
             return;
         }
         // GET: Instructor/NewInstructor
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult New()
         {
             return View();
@@ -128,7 +128,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// This will send a JSON payload containing the new Instructor details to the InstrumentLessonData API and create the Instructor in the system.
         /// </example>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult Create(Instructor instructor)
         {
             Debug.WriteLine("the json payload is :");
@@ -163,7 +163,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// /// GET: /InstrumentLesson/EditInstructor/5
         /// This will communicate with the InstrumentLessonData API to retrieve the Instructor with ID 5, and then display its details in the view for editing.
         /// </example>
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult Edit(int id)
         {
             // Objective: Communicate with our instructor data API to edit one instructor
@@ -187,7 +187,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// This will send a JSON payload containing the updated Instructor details to the InstrumentLessonData API and update the Instructor in the system.
         /// </example>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult Update(int id, Instructor instructor)
         {
             try
@@ -234,7 +234,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// GET: /InstrumentLesson/DeleteConfirmInstructor/5
         /// This will communicate with the InstrumentLessonData API to retrieve the Instructor with ID 5, and then display its details in the view for deletion confirmation.
         /// </example>
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult DeleteConfirm(int id)
         {
             string url = "InstructorData/FindInstructor/" + id;
@@ -255,7 +255,7 @@ namespace CreativeCollabMusicalRecipes.Controllers
         /// This will send a delete request to the InstructorData API to remove the Instructor with ID 5 from the system.
         /// </example>
         [HttpPost]
-        [Authorize]
+        [Authorize(Roles = "MusicAdmin")]
         public ActionResult Delete(int id)
         {
             string url = "InstructorData/DeleteInstructor/" + id;

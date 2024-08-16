@@ -48,6 +48,38 @@ namespace CreativeCollabMusicalRecipes.Controllers
         }
 
         /// <summary>
+        /// Returns all lessons related to a particular lesson ID
+        /// </summary>
+        /// <param name="id">Lesson ID.</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: All lessons related to the specified lesson ID
+        /// </returns>
+        /// <example>
+        /// GET: api/LessonData/ListLessonsForRecipe/3
+        /// </example>
+        [HttpGet]
+        [ResponseType(typeof(LessonDto))]
+        [Route("api/LessonData/ListLessonsForRecipe/{id}")]
+        public IHttpActionResult ListLessonsForRecipe(int id)
+        {
+            List<Lesson> Lessons = db.Lesson.Where(r => r.Recipe.Any(i => i.RecipeId == id)).ToList();
+            List<LessonDto> LessonDtos = new List<LessonDto>();
+
+            Lessons.ForEach(a => LessonDtos.Add(new LessonDto()
+            {
+                LessonName = a.LessonName,
+                StartDate = a.StartDate,
+                EndDate = a.EndDate,
+                LessonID = a.LessonID,
+                FirstName = a.Instructor.FirstName,
+                InstructorId = a.Instructor.InstructorId
+            }));
+
+            return Ok(LessonDtos);
+        }
+
+        /// <summary>
         /// Retrieves the details of a specific instrument lesson based on the provided ID.
         /// </summary>
         /// <param name="id">The ID of the instrument lesson to retrieve.</param>
@@ -67,20 +99,6 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 return NotFound();
             }
 
-            RecipeDto recipeDto = null;
-            if (Lesson.RecipeId.HasValue)
-            {
-                Recipe recipe = db.Recipes.Find(Lesson.RecipeId.Value);
-                if (recipe != null)
-                {
-                    recipeDto = new RecipeDto
-                    {
-                        RecipeId = recipe.RecipeId,
-                        Title = recipe.Title
-                    };
-                }
-            }
-
             LessonDto LessonDto = new LessonDto
             {
                 LessonID = Lesson.LessonID,
@@ -90,8 +108,6 @@ namespace CreativeCollabMusicalRecipes.Controllers
                 InstructorId = Lesson.InstructorId,
                 FirstName = Lesson.Instructor?.FirstName,
                 LastName = Lesson.Instructor?.LastName,
-                RecipeId = Lesson.RecipeId,
-                Recipe = recipeDto
             };
 
 
@@ -136,7 +152,6 @@ namespace CreativeCollabMusicalRecipes.Controllers
             lesson.StartDate = LessonDto.StartDate;
             lesson.EndDate = LessonDto.EndDate;
             lesson.InstructorId = LessonDto.InstructorId;
-            lesson.RecipeId = LessonDto.RecipeId == 0 ? (int?)null : LessonDto.RecipeId;
 
             db.Entry(lesson).State = EntityState.Modified;
 
@@ -177,11 +192,6 @@ namespace CreativeCollabMusicalRecipes.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
-            }
-            // Check if RecipeId is 0 and set it to null if so
-            if (Lesson.RecipeId == 0)
-            {
-                Lesson.RecipeId = null;
             }
 
             db.Lesson.Add(Lesson);
